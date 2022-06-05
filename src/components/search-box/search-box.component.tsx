@@ -61,12 +61,12 @@ So if we write this twice, TypeScript under the hood, it is going to also combin
 that your Isearchboxprops now contains all 2 of these values.
 */
 
-export const SearchBox = ({placeholder, handleChange}: ISearchBoxProps) =>(
-    <input type="search"
-    className="search" 
-    placeholder={placeholder}
-    onChange={handleChange}/>
-);
+// export const SearchBox = ({placeholder, handleChange}: ISearchBoxProps) =>(
+//     <input type="search"
+//     className="search" 
+//     placeholder={placeholder}
+//     onChange={handleChange}/>
+// );
 
 /*
 The alternative is to write types.
@@ -74,3 +74,85 @@ Types are very similar to interfaces, but we lack both of these functionalities.
 We do not have the ability to overload and we do not have the ability to extend.
 */
 
+
+/*  
+  2- TYPES
+   The way that type works is very similar to interface, except you don't need the AI.
+   So we can say interface of I.
+   Search box props can be converted to type.
+   Search box props like this.
+   Except we need to use an equal sign.
+   And then inside we need to define an object that represents the shape of this 
+   props object.
+*/
+
+type SearchBoxProps = {
+    placeholder?: string;
+    handleChange:(a: string) => void
+}
+
+export const SearchBox = ({placeholder, handleChange}: SearchBoxProps) =>(
+    <input type="search"
+    className="search" 
+    placeholder={placeholder}
+    onChange={handleChange}/>
+);
+
+/*
+Now you might be wondering what is the main difference between using a type versus using an
+interface other than the fact that interfaces offer us the ability to extend and offer us 
+the ability to overload like so?
+
+Types allow us to do something known as a union.
+Now, a union is essentially a combination of types.
+*/
+
+type CanadianAddress = {
+    street: string;
+    province: string;
+}
+
+type USAddress = {
+    street: string;
+    state: string;
+}
+
+// type NorthAmericanAddress = CanadianAddress | USAddress ; 
+/*
+We've created now a union type. means address
+If being passed, our union can now represent both a street.With some value.
+Or. It can have a state.With some value.As well as a province.
+
+Both are equally valid.
+*/
+
+const Address : NorthAmericanAddress = {
+    street: 'adas',
+    state:'adasd',
+    province:'qq'
+}
+
+/*
+We can also add additional union types on top of this here
+*/
+type ItalianAddress = {
+    street: string;
+    state: string;
+}
+
+type NorthAmericanAddress = CanadianAddress | USAddress | ItalianAddress; 
+
+//  it will show error Object literal may only specify known properties, 
+//and 'region' does not exist in type 'NorthAmericanAddress'
+const Address : NorthAmericanAddress = {
+    street: 'adas',
+    state:'adasd',
+    region:'qq'
+}
+
+/*
+Typically, the Golden Rule is that if you are writing 
+more of a functional style of code, functional
+programming style, then you use types.
+If you do more of an object oriented style, then you use interfaces.
+*/
