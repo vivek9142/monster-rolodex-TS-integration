@@ -99,7 +99,7 @@ const App = () => {
         <SearchBox 
         placeholder="Search Monsters" 
         handleChange={onSearchChange}/>
-        <CardList monster={filteredMonsters} />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
 }
